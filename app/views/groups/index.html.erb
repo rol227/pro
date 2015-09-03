@@ -1,0 +1,15 @@
+<h1>Groups Index</h1>
+
+<% @profile = @graph.get_object("me") %>
+<%= @profile["name"] %><br>
+
+<% @albums = @graph.get_connections("me", "albums?fields=name,photos{name, images{source}}") %>
+<% @albums.third["photos"]["data"].each do |data| %>
+	<%= image_tag data["images"].first["source"], size: "206x206" %>
+<% end %>
+
+<br>
+
+<%= link_to 'Sign Out', sign_out_path, method: :delete %>
+
+
