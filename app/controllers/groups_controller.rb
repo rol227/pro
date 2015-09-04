@@ -4,6 +4,11 @@ class GroupsController < ApplicationController
 
 	def index
 		@group = Group.offset(rand(Group.count)).first 
+
+		respond_to do |format|
+			format.html
+			format.js 
+		end
 	end
 
 	def show
