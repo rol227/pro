@@ -1,5 +1,20 @@
 <h1>Groups Index</h1>
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <% @profile = @graph.get_object("me") %>
 <%= @profile["name"] %><br>
 <%= link_to 'Sign Out', sign_out_path, method: :delete %>
@@ -8,10 +23,17 @@
 
 <% @albums = @graph.get_connections("me", "albums?fields=name,photos{name, images{source}}") %>
 <% @albums.at(3)["photos"]["data"].each do |data| %>
-	<div class="outer">
-			<%= image_tag data["images"].first["source"] %>
-	</div>
+	<div id="<%= data["id"] %>" class="outer" data-toggle="modal" data-target="#myModal">
+    <%= image_tag data["images"].first["source"] %>
+  </div>
 <% end %>
 
-
+<script>
+$(document).ready(function() {
+	$(".outer").click(function (e){
+    e.preventDefault();
+    $(".modal-body").html($(this).html());
+  });
+});
+</script>
 

@@ -1,1 +1,6 @@
-select.js.erb
+$(document).ready(function() {
+	$(".outer").click(function (e){
+    e.preventDefault();
+    $(".modal-body").html($(this).html());
+  });
+});
